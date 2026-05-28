@@ -29,6 +29,7 @@ import {
   UserRound,
   Waypoints,
   Workflow,
+  X,
 } from "lucide-react";
 import "./styles.css";
 
@@ -612,9 +613,22 @@ function Beyond() {
 }
 
 function Contact() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [formStatus, setFormStatus] = useState("");
   const [formStatusType, setFormStatusType] = useState<"idle" | "success" | "error">("idle");
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  function openModal() {
+    setIsModalOpen(true);
+    setFormStatus("");
+    setFormStatusType("idle");
+  }
+
+  function closeModal() {
+    if (!isSubmitting) {
+      setIsModalOpen(false);
+    }
+  }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -702,38 +716,81 @@ function Contact() {
             WhatsApp
           </a>
         </div>
-      </section>
-      <form className="contact-form" action="/api/contact" method="post" onSubmit={handleSubmit}>
-        <label>
-          Name
-          <input name="name" placeholder="Your name" required />
-        </label>
-        <label>
-          Email
-          <input name="email" type="email" placeholder="you@example.com" required />
-        </label>
-        <label>
-          Phone
-          <input name="phone" type="tel" placeholder="+27 ..." />
-        </label>
-        <label>
-          Project type
-          <select name="projectType" defaultValue="consulting" required>
-            <option value="consulting">Consulting</option>
-            <option value="development">Software development</option>
-            <option value="devops">DevOps collaboration</option>
-          </select>
-        </label>
-        <label>
-          Message
-          <textarea name="message" placeholder="Tell me what you want to build." required />
-        </label>
-        <button type="submit" disabled={isSubmitting}>
+        <button className="primary-contact-button" type="button" onClick={openModal}>
           <Rocket size={18} />
-          {isSubmitting ? "Sending..." : "Start conversation"}
+          Start conversation
         </button>
-        {formStatus && <p className={`form-status ${formStatusType}`}>{formStatus}</p>}
-      </form>
+      </section>
+      <aside className="contact-preview">
+        <p className="mono">response.mode</p>
+        <strong>Let's have a chat.</strong>
+        <p>
+          Tell me about your idea, project, or problem to solve or just{" "}
+          <span className="hire-highlight">Hire Me</span>. Use the form for details, or reach out via Call or WhatsApp.
+        </p>
+      </aside>
+
+      <AnimatePresence>
+        {isModalOpen && (
+          <motion.div
+            className="modal-backdrop"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              aria-modal="true"
+              className="contact-modal"
+              initial={{ opacity: 0, y: 24, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 18, scale: 0.96 }}
+              role="dialog"
+              transition={{ duration: 0.24, ease: "easeOut" }}
+            >
+              <div className="modal-header">
+                <div>
+                  <p className="eyebrow">Start conversation</p>
+                  <h3>Capture project details</h3>
+                </div>
+                <button aria-label="Close contact form" onClick={closeModal} type="button">
+                  <X size={18} />
+                </button>
+              </div>
+              <form className="contact-form" action="/api/contact" method="post" onSubmit={handleSubmit}>
+                <label>
+                  Name
+                  <input name="name" placeholder="Your name" required />
+                </label>
+                <label>
+                  Email
+                  <input name="email" type="email" placeholder="you@example.com" required />
+                </label>
+                <label>
+                  Phone
+                  <input name="phone" type="tel" placeholder="+27 ..." />
+                </label>
+                <label>
+                  Project type
+                  <select name="projectType" defaultValue="consulting" required>
+                    <option value="consulting">Consulting</option>
+                    <option value="development">Software development</option>
+                    <option value="devops">DevOps collaboration</option>
+                  </select>
+                </label>
+                <label>
+                  Message
+                  <textarea name="message" placeholder="Tell me what you want to build." required />
+                </label>
+                <button type="submit" disabled={isSubmitting}>
+                  <Rocket size={18} />
+                  {isSubmitting ? "Sending..." : "Send enquiry"}
+                </button>
+                {formStatus && <p className={`form-status ${formStatusType}`}>{formStatus}</p>}
+              </form>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

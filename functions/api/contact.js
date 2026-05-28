@@ -40,7 +40,10 @@ export async function onRequestPost({ request, env }) {
     return jsonResponse({ error: "Email service is not configured yet." }, 503);
   }
 
-  const data = await request.json().catch(() => null);
+  const contentType = request.headers.get("content-type") || "";
+  const data = contentType.includes("application/json")
+    ? await request.json().catch(() => null)
+    : Object.fromEntries(await request.formData().catch(() => new FormData()));
 
   if (!data) {
     return jsonResponse({ error: "Invalid request body." }, 400);

@@ -672,10 +672,10 @@ function Contact() {
           apps, automation, and DevOps-focused builds.
         </SectionTitle>
         <div className="cta-row">
-          <a href="mailto:hello@mlondolozi.dev">
+          <span className="contact-chip" aria-label="Email address">
             <Mail size={18} />
-            Email
-          </a>
+            hello@mlondolozi.dev
+          </span>
           <a href="https://www.linkedin.com/in/mlondolozi-zondi/" target="_blank" rel="noreferrer">
             <Linkedin size={18} />
             LinkedIn
@@ -694,7 +694,7 @@ function Contact() {
           </a>
         </div>
       </section>
-      <form className="contact-form" onSubmit={handleSubmit}>
+      <form className="contact-form" action="/api/contact" method="post" onSubmit={handleSubmit}>
         <label>
           Name
           <input name="name" placeholder="Your name" required />

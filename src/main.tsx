@@ -1,10 +1,9 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useState, type FormEvent, type ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Activity,
-  ArrowUpRight,
   Boxes,
   BriefcaseBusiness,
   CloudCog,
@@ -331,7 +330,7 @@ function TopBar({ active }: { active: TabId }) {
   return (
     <header className="top-bar">
       <div>
-        <p className="eyebrow">South African software developer + technology consultant</p>
+        <p className="eyebrow">Consultant + software developer</p>
         <h1>Mlondolozi Zondi</h1>
       </div>
       <div className="signal-row">
@@ -494,9 +493,6 @@ function Projects() {
                 <span key={item}>{item}</span>
               ))}
             </div>
-            <a href="#contact">
-              View route <ArrowUpRight size={15} />
-            </a>
           </motion.article>
         ))}
       </div>
@@ -616,6 +612,39 @@ function Beyond() {
 }
 
 function Contact() {
+  const [formStatus, setFormStatus] = useState("");
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const form = event.currentTarget;
+
+    if (!form.reportValidity()) {
+      return;
+    }
+
+    const data = new FormData(form);
+    const name = String(data.get("name") || "").trim();
+    const email = String(data.get("email") || "").trim();
+    const phone = String(data.get("phone") || "").trim();
+    const projectType = String(data.get("projectType") || "").trim();
+    const message = String(data.get("message") || "").trim();
+    const subject = encodeURIComponent(`Portfolio enquiry from ${name}`);
+    const body = encodeURIComponent(
+      [
+        `Name: ${name}`,
+        `Email: ${email}`,
+        `Phone: ${phone || "Not provided"}`,
+        `Project type: ${projectType}`,
+        "",
+        "Message:",
+        message,
+      ].join("\n"),
+    );
+
+    window.location.href = `mailto:mbusozayo0@gmail.com?subject=${subject}&body=${body}`;
+    setFormStatus("Email draft prepared. For an immediate response, use Call or WhatsApp.");
+  }
+
   return (
     <div className="contact-layout" id="contact">
       <section>
@@ -646,14 +675,22 @@ function Contact() {
           </a>
         </div>
       </section>
-      <form className="contact-form">
+      <form className="contact-form" onSubmit={handleSubmit}>
         <label>
           Name
-          <input placeholder="Your name" />
+          <input name="name" placeholder="Your name" required />
+        </label>
+        <label>
+          Email
+          <input name="email" type="email" placeholder="you@example.com" required />
+        </label>
+        <label>
+          Phone
+          <input name="phone" type="tel" placeholder="+27 ..." />
         </label>
         <label>
           Project type
-          <select defaultValue="consulting">
+          <select name="projectType" defaultValue="consulting" required>
             <option value="consulting">Consulting</option>
             <option value="development">Software development</option>
             <option value="devops">DevOps collaboration</option>
@@ -661,12 +698,13 @@ function Contact() {
         </label>
         <label>
           Message
-          <textarea placeholder="Tell me what you want to build." />
+          <textarea name="message" placeholder="Tell me what you want to build." required />
         </label>
-        <button type="button">
+        <button type="submit">
           <Rocket size={18} />
           Start conversation
         </button>
+        {formStatus && <p className="form-status">{formStatus}</p>}
       </form>
     </div>
   );

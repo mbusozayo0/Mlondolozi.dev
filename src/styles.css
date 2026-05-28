@@ -812,6 +812,12 @@ p {
   background: linear-gradient(90deg, rgba(34, 211, 238, 0.22), rgba(255, 159, 67, 0.16));
 }
 
+.form-status {
+  margin: 0;
+  color: #c8f8ff;
+  font-size: 0.9rem;
+}
+
 @keyframes drift {
   from {
     background-position: 0 0;

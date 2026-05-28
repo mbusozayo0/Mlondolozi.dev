@@ -27,11 +27,12 @@ Use Cloudflare Pages with GitHub auto deployment.
    - Build command: `npm run build`
    - Build output directory: `dist`
    - Root directory: `/`
-7. Deploy.
+7. Leave the deploy command empty.
+8. Deploy.
 
 Cloudflare will automatically deploy new commits pushed to the connected GitHub branch.
 
-The file `public/_redirects` is included so direct page refreshes resolve back to the app.
+Do not set `npx wrangler deploy` as the deploy command for Cloudflare Pages. Pages deploys the built `dist/` folder automatically.
 
 ## Contact Form Email
 

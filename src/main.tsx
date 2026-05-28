@@ -650,7 +650,15 @@ function Contact() {
         throw new Error(`${result?.error || "Message could not be sent."}${details}`);
       }
 
+      const result = await response.json().catch(() => null);
       form.reset();
+
+      if (result?.warning) {
+        setFormStatusType("error");
+        setFormStatus(result.warning);
+        return;
+      }
+
       setFormStatusType("success");
       setFormStatus("Message sent. You will also receive an automatic confirmation email.");
     } catch (error) {

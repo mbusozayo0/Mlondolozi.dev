@@ -97,24 +97,34 @@ export async function onRequestPost({ request, env }) {
       "Mlondolozi Zondi",
     ].join("\n");
 
-    await Promise.all([
-      sendEmail(env, {
-        from: fromAddress,
-        to: [toAddress],
-        reply_to: email,
-        subject: `Portfolio enquiry from ${name}`,
-        text: enquiryText,
-      }),
-      sendEmail(env, {
+    await sendEmail(env, {
+      from: fromAddress,
+      to: [toAddress],
+      reply_to: email,
+      subject: `Portfolio enquiry from ${name}`,
+      text: enquiryText,
+    });
+
+    try {
+      await sendEmail(env, {
         from: fromAddress,
         to: [email],
         reply_to: toAddress,
         subject: "Thanks for contacting Mlondolozi.dev",
         text: autoResponseText,
-      }),
-    ]);
+      });
+    } catch (error) {
+      return jsonResponse({
+        ok: true,
+        autoResponseSent: false,
+        warning:
+          error instanceof Error
+            ? `Your message was sent, but the auto-response failed. ${error.message}`
+            : "Your message was sent, but the auto-response failed.",
+      });
+    }
 
-    return jsonResponse({ ok: true });
+    return jsonResponse({ ok: true, autoResponseSent: true });
   } catch (error) {
     return errorResponse(
       "Message could not be sent.",
@@ -122,6 +132,16 @@ export async function onRequestPost({ request, env }) {
       error instanceof Error ? error.message : "Unknown server error.",
     );
   }
+}
+
+export async function onRequestGet({ env }) {
+  return jsonResponse({
+    ok: true,
+    route: "/api/contact",
+    resendConfigured: Boolean(env.RESEND_API_KEY),
+    contactTo: env.CONTACT_TO || "hello@mlondolozi.dev",
+    contactFrom: env.CONTACT_FROM || "Mlondolozi.dev <hello@mlondolozi.dev>",
+  });
 }
 
 export async function onRequestOptions() {

@@ -646,7 +646,8 @@ function Contact() {
 
       if (!response.ok) {
         const result = await response.json().catch(() => null);
-        throw new Error(result?.error || "Message could not be sent.");
+        const details = result?.details ? ` ${result.details}` : "";
+        throw new Error(`${result?.error || "Message could not be sent."}${details}`);
       }
 
       form.reset();

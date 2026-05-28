@@ -27,6 +27,7 @@ import {
   ShieldCheck,
   Sparkles,
   Terminal,
+  ThumbsUp,
   UserRound,
   Waypoints,
   Workflow,
@@ -659,7 +660,7 @@ function Contact() {
       });
       form.reset();
       setFormStatusType("success");
-      setFormStatus("Message sent. You should receive an automatic confirmation email shortly.");
+      setFormStatus("Submitted. Thanks for reaching out.");
     } catch (error) {
       setFormStatusType("error");
       setFormStatus(
@@ -741,39 +742,52 @@ function Contact() {
                   <X size={18} />
                 </button>
               </div>
-              <form className="contact-form" onSubmit={handleSubmit}>
-                <input name="to_email" type="hidden" value="hello@mlondolozi.dev" />
-                <input name="site_name" type="hidden" value="Mlondolozi.dev" />
-                <label>
-                  Name
-                  <input name="from_name" placeholder="Your name" required />
-                </label>
-                <label>
-                  Email
-                  <input name="from_email" type="email" placeholder="you@example.com" required />
-                </label>
-                <label>
-                  Phone
-                  <input name="phone" type="tel" placeholder="+27 ..." />
-                </label>
-                <label>
-                  Project type
-                  <select name="project_type" defaultValue="consulting" required>
-                    <option value="consulting">Consulting</option>
-                    <option value="development">Software development</option>
-                    <option value="devops">DevOps collaboration</option>
-                  </select>
-                </label>
-                <label>
-                  Message
-                  <textarea name="message" placeholder="Tell me what you want to build." required />
-                </label>
-                <button type="submit" disabled={isSubmitting}>
-                  <Rocket size={18} />
-                  {isSubmitting ? "Sending..." : "Send enquiry"}
-                </button>
-                {formStatus && <p className={`form-status ${formStatusType}`}>{formStatus}</p>}
-              </form>
+              {formStatusType === "success" ? (
+                <div className="submitted-state">
+                  <div className="submitted-icon">
+                    <ThumbsUp size={34} />
+                  </div>
+                  <h3>Submitted</h3>
+                  <p>{formStatus}</p>
+                  <button type="button" onClick={closeModal}>
+                    Close
+                  </button>
+                </div>
+              ) : (
+                <form className="contact-form" onSubmit={handleSubmit}>
+                  <input name="to_email" type="hidden" value="hello@mlondolozi.dev" />
+                  <input name="site_name" type="hidden" value="Mlondolozi.dev" />
+                  <label>
+                    Name
+                    <input name="from_name" placeholder="Your name" required />
+                  </label>
+                  <label>
+                    Email
+                    <input name="from_email" type="email" placeholder="you@example.com" required />
+                  </label>
+                  <label>
+                    Phone
+                    <input name="phone" type="tel" placeholder="+27 ..." />
+                  </label>
+                  <label>
+                    Project type
+                    <select name="project_type" defaultValue="consulting" required>
+                      <option value="consulting">Consulting</option>
+                      <option value="development">Software development</option>
+                      <option value="devops">DevOps collaboration</option>
+                    </select>
+                  </label>
+                  <label>
+                    Message
+                    <textarea name="message" placeholder="Tell me what you want to build." required />
+                  </label>
+                  <button type="submit" disabled={isSubmitting}>
+                    <Rocket size={18} />
+                    {isSubmitting ? "Sending..." : "Send enquiry"}
+                  </button>
+                  {formStatus && <p className={`form-status ${formStatusType}`}>{formStatus}</p>}
+                </form>
+              )}
             </motion.div>
           </motion.div>
         )}

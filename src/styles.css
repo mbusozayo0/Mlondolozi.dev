@@ -247,7 +247,7 @@ p {
 }
 
 .browser-chrome {
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 14px;
   padding: 12px 18px;
   background: rgba(8, 13, 22, 0.74);
@@ -256,29 +256,49 @@ p {
 
 .traffic {
   display: flex;
-  gap: 8px;
+  flex: 0 0 auto;
+  gap: 2px;
+  order: 3;
 }
 
 .traffic span,
 .window-bar span {
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 28px;
+  border-radius: 4px;
+  color: #24c4ff;
+  background: transparent;
+  font-family: "Segoe UI", Inter, sans-serif;
+  font-size: 15px;
+  line-height: 1;
 }
 
 .traffic span:nth-child(1),
 .window-bar span:nth-child(1) {
-  background: #ff5f57;
+  background: transparent;
 }
 
 .traffic span:nth-child(2),
 .window-bar span:nth-child(2) {
-  background: #ffbd2e;
+  background: transparent;
 }
 
 .traffic span:nth-child(3),
 .window-bar span:nth-child(3) {
-  background: #28c840;
+  background: transparent;
+}
+
+.traffic span:hover,
+.window-bar span:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.traffic span:nth-child(3):hover,
+.window-bar span:nth-child(3):hover {
+  color: #24c4ff;
+  background: rgba(232, 17, 35, 0.85);
 }
 
 .address-bar {
@@ -296,6 +316,10 @@ p {
   overflow: hidden;
 }
 
+.browser-chrome .address-bar {
+  margin-inline: auto;
+}
+
 .address-bar span {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -304,6 +328,7 @@ p {
 
 .chrome-actions {
   display: flex;
+  flex: 0 0 auto;
   gap: 10px;
   color: var(--teal);
 }
@@ -630,16 +655,23 @@ p {
 }
 
 .window-bar {
-  gap: 7px;
+  justify-content: flex-start;
+  gap: 2px;
   height: 42px;
   margin: 0 -16px 16px;
-  padding: 0 13px;
+  padding: 0 7px;
   border-bottom: 1px solid var(--line);
   background: rgba(255, 255, 255, 0.04);
 }
 
+.window-bar span {
+  order: 2;
+}
+
 .window-bar em {
-  margin-left: auto;
+  order: 1;
+  margin-left: 0;
+  margin-right: auto;
   color: var(--muted);
   font-family: "JetBrains Mono", monospace;
   font-size: 0.72rem;
@@ -812,10 +844,23 @@ p {
   background: linear-gradient(90deg, rgba(34, 211, 238, 0.22), rgba(255, 159, 67, 0.16));
 }
 
+.contact-form button:disabled {
+  cursor: wait;
+  opacity: 0.68;
+}
+
 .form-status {
   margin: 0;
   color: #c8f8ff;
   font-size: 0.9rem;
+}
+
+.form-status.success {
+  color: var(--green);
+}
+
+.form-status.error {
+  color: #ff9f9f;
 }
 
 @keyframes drift {

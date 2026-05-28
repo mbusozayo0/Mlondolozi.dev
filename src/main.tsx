@@ -188,9 +188,9 @@ function App() {
         <TopBar active={active} />
         <div className="browser-chrome">
           <div className="traffic">
-            <span />
-            <span />
-            <span />
+            <span>−</span>
+            <span>□</span>
+            <span>×</span>
           </div>
           <div className="address-bar">
             <ShieldCheck size={16} />
@@ -474,9 +474,9 @@ function Projects() {
             whileHover={{ y: -8, rotateX: 4, rotateY: index % 2 ? -3 : 3 }}
           >
             <div className="window-bar">
-              <span />
-              <span />
-              <span />
+              <span>−</span>
+              <span>□</span>
+              <span>×</span>
               <em>{project.type}</em>
             </div>
             <h3>{project.name}</h3>
@@ -613,8 +613,10 @@ function Beyond() {
 
 function Contact() {
   const [formStatus, setFormStatus] = useState("");
+  const [formStatusType, setFormStatusType] = useState<"idle" | "success" | "error">("idle");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = event.currentTarget;
 
@@ -628,21 +630,38 @@ function Contact() {
     const phone = String(data.get("phone") || "").trim();
     const projectType = String(data.get("projectType") || "").trim();
     const message = String(data.get("message") || "").trim();
-    const subject = encodeURIComponent(`Portfolio enquiry from ${name}`);
-    const body = encodeURIComponent(
-      [
-        `Name: ${name}`,
-        `Email: ${email}`,
-        `Phone: ${phone || "Not provided"}`,
-        `Project type: ${projectType}`,
-        "",
-        "Message:",
-        message,
-      ].join("\n"),
-    );
 
-    window.location.href = `mailto:mbusozayo0@gmail.com?subject=${subject}&body=${body}`;
-    setFormStatus("Email draft prepared. For an immediate response, use Call or WhatsApp.");
+    setIsSubmitting(true);
+    setFormStatusType("idle");
+    setFormStatus("Sending your message...");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email, phone, projectType, message }),
+      });
+
+      if (!response.ok) {
+        const result = await response.json().catch(() => null);
+        throw new Error(result?.error || "Message could not be sent.");
+      }
+
+      form.reset();
+      setFormStatusType("success");
+      setFormStatus("Message sent. You will also receive an automatic confirmation email.");
+    } catch (error) {
+      setFormStatusType("error");
+      setFormStatus(
+        error instanceof Error
+          ? `${error.message} For an immediate response, use Call or WhatsApp.`
+          : "Message could not be sent. For an immediate response, use Call or WhatsApp.",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -653,7 +672,7 @@ function Contact() {
           apps, automation, and DevOps-focused builds.
         </SectionTitle>
         <div className="cta-row">
-          <a href="mailto:mbusozayo0@gmail.com">
+          <a href="mailto:hello@mlondolozi.dev">
             <Mail size={18} />
             Email
           </a>
@@ -700,11 +719,11 @@ function Contact() {
           Message
           <textarea name="message" placeholder="Tell me what you want to build." required />
         </label>
-        <button type="submit">
+        <button type="submit" disabled={isSubmitting}>
           <Rocket size={18} />
-          Start conversation
+          {isSubmitting ? "Sending..." : "Start conversation"}
         </button>
-        {formStatus && <p className="form-status">{formStatus}</p>}
+        {formStatus && <p className={`form-status ${formStatusType}`}>{formStatus}</p>}
       </form>
     </div>
   );

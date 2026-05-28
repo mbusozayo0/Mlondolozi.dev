@@ -36,16 +36,103 @@ Do not set `npx wrangler deploy` as the deploy command for Cloudflare Pages. Pag
 
 ## Contact Form Email
 
-The contact form uses a Cloudflare Pages Function at `/api/contact`.
+The contact popup uses EmailJS from the browser.
 
-Create these Cloudflare Pages environment variables:
+Create an EmailJS service and template, then add these Cloudflare Pages environment variables:
 
 ```txt
-RESEND_API_KEY=your_resend_api_key
-CONTACT_TO=
-CONTACT_FROM=
+VITE_EMAILJS_SERVICE_ID=service_xxxxxxx
+VITE_EMAILJS_TEMPLATE_ID=template_xxxxxxx
+VITE_EMAILJS_PUBLIC_KEY=your_public_key
 ```
 
-`RESEND_API_KEY` is required. `CONTACT_TO` and `CONTACT_FROM` can be changed later if needed.
+These variables are used at build time, so redeploy after changing them.
 
-In Resend, verify the `mlondolozi.dev` domain before using `hello@mlondolozi.dev` as the sender address.
+Recommended EmailJS template variables:
+
+```txt
+{{site_name}}
+{{to_email}}
+{{from_name}}
+{{from_email}}
+{{phone}}
+{{project_type}}
+{{message}}
+```
+
+### Email You Receive
+
+Use this as the main EmailJS template.
+
+Subject:
+
+```txt
+New portfolio enquiry from {{from_name}}
+```
+
+To email:
+
+```txt
+hello@mlondolozi.dev
+```
+
+Reply-to:
+
+```txt
+{{from_email}}
+```
+
+Body:
+
+```txt
+New enquiry from {{site_name}}
+
+Name: {{from_name}}
+Email: {{from_email}}
+Phone: {{phone}}
+Project type: {{project_type}}
+
+Message:
+{{message}}
+
+Reply directly to this email to continue the conversation.
+```
+
+### Auto-Response Email
+
+Use this as the EmailJS auto-reply template.
+
+To email:
+
+```txt
+{{from_email}}
+```
+
+Subject:
+
+```txt
+Thanks for reaching out to Mlondolozi.dev
+```
+
+Body:
+
+```txt
+Hi {{from_name}},
+
+Thanks for reaching out through Mlondolozi.dev. I received your message and will review the details you shared.
+
+If your request is urgent, you can call or WhatsApp me on +27 68 140 2763.
+
+Summary of your enquiry:
+
+Project type: {{project_type}}
+
+Message:
+{{message}}
+
+Regards,
+Mlondolozi Zondi
+
+Consultant + software developer
+hello@mlondolozi.dev
+```

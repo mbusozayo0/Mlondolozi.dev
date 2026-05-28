@@ -2,6 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { useEffect, useState, type FormEvent, type ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import emailjs from "@emailjs/browser";
 import {
   Activity,
   Boxes,
@@ -638,48 +639,32 @@ function Contact() {
       return;
     }
 
-    const data = new FormData(form);
-    const name = String(data.get("name") || "").trim();
-    const email = String(data.get("email") || "").trim();
-    const phone = String(data.get("phone") || "").trim();
-    const projectType = String(data.get("projectType") || "").trim();
-    const message = String(data.get("message") || "").trim();
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+    if (!serviceId || !templateId || !publicKey) {
+      setFormStatusType("error");
+      setFormStatus("EmailJS is not configured yet. Please use Call or WhatsApp for now.");
+      return;
+    }
 
     setIsSubmitting(true);
     setFormStatusType("idle");
     setFormStatus("Sending your message...");
 
     try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name, email, phone, projectType, message }),
+      await emailjs.sendForm(serviceId, templateId, form, {
+        publicKey,
       });
-
-      if (!response.ok) {
-        const result = await response.json().catch(() => null);
-        const details = result?.details ? ` ${result.details}` : "";
-        throw new Error(`${result?.error || "Message could not be sent."}${details}`);
-      }
-
-      const result = await response.json().catch(() => null);
       form.reset();
-
-      if (result?.warning) {
-        setFormStatusType("error");
-        setFormStatus(result.warning);
-        return;
-      }
-
       setFormStatusType("success");
-      setFormStatus("Message sent. You will also receive an automatic confirmation email.");
+      setFormStatus("Message sent. You should receive an automatic confirmation email shortly.");
     } catch (error) {
       setFormStatusType("error");
       setFormStatus(
         error instanceof Error
-          ? `${error.message} For an immediate response, use Call or WhatsApp.`
+          ? `Message could not be sent through EmailJS. ${error.message} For an immediate response, use Call or WhatsApp.`
           : "Message could not be sent. For an immediate response, use Call or WhatsApp.",
       );
     } finally {
@@ -756,14 +741,16 @@ function Contact() {
                   <X size={18} />
                 </button>
               </div>
-              <form className="contact-form" action="/api/contact" method="post" onSubmit={handleSubmit}>
+              <form className="contact-form" onSubmit={handleSubmit}>
+                <input name="to_email" type="hidden" value="hello@mlondolozi.dev" />
+                <input name="site_name" type="hidden" value="Mlondolozi.dev" />
                 <label>
                   Name
-                  <input name="name" placeholder="Your name" required />
+                  <input name="from_name" placeholder="Your name" required />
                 </label>
                 <label>
                   Email
-                  <input name="email" type="email" placeholder="you@example.com" required />
+                  <input name="from_email" type="email" placeholder="you@example.com" required />
                 </label>
                 <label>
                   Phone
@@ -771,7 +758,7 @@ function Contact() {
                 </label>
                 <label>
                   Project type
-                  <select name="projectType" defaultValue="consulting" required>
+                  <select name="project_type" defaultValue="consulting" required>
                     <option value="consulting">Consulting</option>
                     <option value="development">Software development</option>
                     <option value="devops">DevOps collaboration</option>

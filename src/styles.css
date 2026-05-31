@@ -199,6 +199,10 @@ a {
   overflow: hidden;
 }
 
+.mobile-sticky-header {
+  display: none;
+}
+
 .top-bar {
   justify-content: space-between;
   gap: 18px;
@@ -1078,16 +1082,79 @@ p {
 
 @media (max-width: 880px) {
   .app-shell {
-    padding: 12px;
+    padding: 298px 12px 12px;
   }
 
   .workspace {
     min-height: calc(100vh - 24px);
+    padding-top: 0;
   }
 
-  .top-bar {
-    align-items: flex-start;
-    flex-direction: column;
+  .mobile-sticky-header {
+    position: fixed;
+    top: 0;
+    left: 12px;
+    right: 12px;
+    z-index: 50;
+    display: block;
+    border: 1px solid rgba(172, 212, 255, 0.18);
+    border-top: 0;
+    border-radius: 0 0 14px 14px;
+    background: rgba(5, 9, 15, 0.96);
+    box-shadow: 0 18px 60px rgba(0, 0, 0, 0.34);
+    backdrop-filter: blur(18px);
+    overflow: hidden;
+  }
+
+  .mobile-title-block {
+    padding: 18px 16px 16px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .mobile-title-block h1 {
+    margin-bottom: 18px;
+  }
+
+  .mobile-brand-block {
+    padding: 16px;
+  }
+
+  .mobile-brand-block .logo {
+    margin-bottom: 14px;
+  }
+
+  .mobile-tabs {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: thin;
+  }
+
+  .mobile-tab {
+    display: grid;
+    grid-template-columns: 22px minmax(0, 1fr);
+    align-items: center;
+    gap: 9px;
+    flex: 0 0 min(210px, 72vw);
+    min-height: 44px;
+    border: 1px solid rgba(83, 231, 255, 0.18);
+    border-radius: 8px;
+    color: #c0d3e5;
+    background: rgba(255, 255, 255, 0.035);
+    padding: 10px 11px;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .mobile-tab.active {
+    border-color: rgba(83, 231, 255, 0.38);
+    background: rgba(34, 211, 238, 0.12);
+    color: var(--text);
+  }
+
+  .workspace > .top-bar {
+    display: none;
   }
 
   .browser-chrome {
@@ -1099,21 +1166,7 @@ p {
   }
 
   .sidebar {
-    padding: 16px;
-    border-right: 0;
-    border-bottom: 1px solid var(--line);
-  }
-
-  .tab-list {
-    display: flex;
-    gap: 8px;
-    overflow-x: auto;
-    padding-bottom: 4px;
-    scrollbar-width: thin;
-  }
-
-  .tab {
-    flex: 0 0 min(210px, 72vw);
+    display: none;
   }
 
   .command-card {
@@ -1136,7 +1189,7 @@ p {
 
 @media (max-width: 640px) {
   .app-shell {
-    padding: 0;
+    padding: 286px 0 0;
   }
 
   .workspace {
@@ -1155,6 +1208,22 @@ p {
 
   .top-bar {
     padding: 18px 16px 14px;
+  }
+
+  .mobile-sticky-header {
+    left: 0;
+    right: 0;
+    border-left: 0;
+    border-right: 0;
+    border-radius: 0;
+  }
+
+  .mobile-title-block {
+    padding: 18px 14px 14px;
+  }
+
+  .mobile-brand-block {
+    padding: 14px;
   }
 
   .tab-content {
@@ -1215,7 +1284,7 @@ p {
     height: 42px;
   }
 
-  .tab {
+  .mobile-tab {
     flex-basis: min(178px, 78vw);
     min-height: 40px;
     padding: 9px;

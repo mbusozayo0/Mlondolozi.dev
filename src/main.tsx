@@ -178,6 +178,7 @@ function App() {
   return (
     <main className="app-shell">
       <AmbientBackground />
+      <MobileStickyHeader active={active} onSelect={setActive} />
       <AnimatePresence>
         {!booted && <BootScreen onSkip={() => setBooted(true)} />}
       </AnimatePresence>
@@ -258,6 +259,40 @@ function App() {
       </motion.section>
       <SearchContent />
     </main>
+  );
+}
+
+function MobileStickyHeader({ active, onSelect }: { active: TabId; onSelect: (tab: TabId) => void }) {
+  return (
+    <header className="mobile-sticky-header">
+      <div className="mobile-title-block">
+        <p className="eyebrow">Consultant + software developer</p>
+        <h1>Mlondolozi Zondi</h1>
+        <div className="signal-row">
+          <span className="live-dot" />
+          <span>{tabs.find((tab) => tab.id === active)?.status}</span>
+        </div>
+      </div>
+      <div className="mobile-brand-block">
+        <Logo />
+        <nav className="mobile-tabs" aria-label="Mobile portfolio sections">
+          {tabs.map((tab) => {
+            const Icon = tab.icon;
+            return (
+              <button
+                className={active === tab.id ? "mobile-tab active" : "mobile-tab"}
+                key={tab.id}
+                onClick={() => onSelect(tab.id)}
+                type="button"
+              >
+                <Icon size={17} />
+                <span>{tab.label}</span>
+              </button>
+            );
+          })}
+        </nav>
+      </div>
+    </header>
   );
 }
 

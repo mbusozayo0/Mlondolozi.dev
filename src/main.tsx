@@ -176,9 +176,9 @@ function App() {
   const [active, setActive] = useState<TabId>("profile");
 
   return (
-    <main className="app-shell">
+    <main className={booted ? "app-shell boot-complete" : "app-shell"}>
       <AmbientBackground />
-      <MobileStickyHeader active={active} onSelect={setActive} />
+      {booted && <MobileStickyHeader active={active} onSelect={setActive} />}
       <AnimatePresence>
         {!booted && <BootScreen onSkip={() => setBooted(true)} />}
       </AnimatePresence>

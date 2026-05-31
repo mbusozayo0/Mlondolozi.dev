@@ -256,6 +256,7 @@ function App() {
           </section>
         </div>
       </motion.section>
+      <SearchContent />
     </main>
   );
 }
@@ -793,6 +794,73 @@ function Contact() {
         )}
       </AnimatePresence>
     </div>
+  );
+}
+
+function SearchContent() {
+  const serviceAreas = [
+    {
+      title: "LabWare LIMS Consulting",
+      text:
+        "Mlondolozi Zondi brings enterprise LabWare LIMS experience across configuration, workflow improvement, user support, training, documentation, and system implementation environments.",
+    },
+    {
+      title: "Software Development",
+      text:
+        "As a software developer, Mlondolozi builds modern browser-based experiences, React interfaces, Firebase-connected products, API integrations, dashboards, and automation tools.",
+    },
+    {
+      title: "DevOps and Platform Engineering",
+      text:
+        "The DevOps journey focuses on Linux, Docker, CI/CD, monitoring, infrastructure automation, cloud engineering, and practical deployment workflows for reliable software delivery.",
+    },
+    {
+      title: "Technology Consulting",
+      text:
+        "Mlondolozi works with clients and technical teams to clarify requirements, translate business problems into software solutions, and deliver systems that are practical to support.",
+    },
+  ];
+
+  const searchTerms = [
+    "Mlondolozi Zondi",
+    "Mlondolozi.dev",
+    "consultant and software developer",
+    "LabWare LIMS consultant",
+    "React developer",
+    "DevOps consultant",
+    "automation systems developer",
+    "technology consultant South Africa",
+  ];
+
+  return (
+    <section className="search-content" aria-labelledby="search-content-title">
+      <div className="search-content-inner">
+        <div className="search-heading">
+          <p className="eyebrow">Search profile</p>
+          <h2 id="search-content-title">Consulting, software development, and DevOps capability.</h2>
+          <p>
+            Mlondolozi Zondi is a consultant and software developer focused on enterprise systems, modern web apps,
+            automation, integrations, and DevOps-focused delivery. The portfolio connects hands-on LabWare LIMS
+            consulting experience with practical software engineering and cloud learning.
+          </p>
+        </div>
+
+        <div className="service-grid">
+          {serviceAreas.map((area) => (
+            <article key={area.title}>
+              <h3>{area.title}</h3>
+              <p>{area.text}</p>
+            </article>
+          ))}
+        </div>
+
+        <div className="search-terms" aria-label="Relevant search topics">
+          {searchTerms.map((term) => (
+            <span key={term}>{term}</span>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 

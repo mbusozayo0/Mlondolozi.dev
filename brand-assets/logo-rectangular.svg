@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="256" viewBox="0 0 960 256" role="img" aria-labelledby="title desc">
+  <title id="title">Mlondolozi Zondi rectangular logo</title>
+  <desc id="desc">A horizontal Mlondolozi Zondi logo with MZ mark, name, and consultant plus software developer descriptor.</desc>
+  <defs>
+    <linearGradient id="panel" x1="0" y1="0" x2="960" y2="256" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#07111e"/>
+      <stop offset="0.52" stop-color="#05070b"/>
+      <stop offset="1" stop-color="#0b0f17"/>
+    </linearGradient>
+    <linearGradient id="mark" x1="62" y1="48" x2="194" y2="208" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#e8fbff"/>
+      <stop offset="0.48" stop-color="#53e7ff"/>
+      <stop offset="1" stop-color="#ffb86c"/>
+    </linearGradient>
+    <filter id="softGlow" x="-35%" y="-35%" width="170%" height="170%" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.13 0 0 0 0 0.83 0 0 0 0 0.93 0 0 0 0.34 0"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="960" height="256" rx="28" fill="url(#panel)"/>
+  <rect x="1" y="1" width="958" height="254" rx="27" fill="none" stroke="#24465d" stroke-width="2"/>
+  <g opacity="0.55">
+    <path d="M32 210 C176 154 240 82 346 132 S542 156 680 72" fill="none" stroke="#174c63" stroke-width="2"/>
+    <path d="M382 221 C512 160 642 190 762 98 C830 46 888 62 928 80" fill="none" stroke="#123d56" stroke-width="2"/>
+  </g>
+  <g transform="translate(46 42)">
+    <ellipse cx="82" cy="86" rx="100" ry="42" fill="none" stroke="#1f9ab2" stroke-width="1.8" opacity="0.6" transform="rotate(-28 82 86)"/>
+    <ellipse cx="82" cy="86" rx="96" ry="62" fill="none" stroke="#245d84" stroke-width="1.8" opacity="0.5" transform="rotate(28 82 86)"/>
+    <rect x="18" y="20" width="128" height="128" rx="22" fill="url(#mark)" filter="url(#softGlow)"/>
+    <text x="82" y="101" text-anchor="middle" fill="#061018" font-family="Space Grotesk, Inter, Arial, sans-serif" font-size="48" font-weight="800" letter-spacing="0">MZ</text>
+  </g>
+  <g transform="translate(226 76)">
+    <text x="0" y="26" fill="#ff9f43" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="800" letter-spacing="2">CONSULTANT + SOFTWARE DEVELOPER</text>
+    <text x="0" y="96" fill="#f4f8fb" font-family="Space Grotesk, Inter, Arial, sans-serif" font-size="68" font-weight="700" letter-spacing="0">Mlondolozi Zondi</text>
+    <text x="2" y="132" fill="#9fb4c8" font-family="JetBrains Mono, Consolas, monospace" font-size="18" font-weight="500">systems / software / cloud</text>
+  </g>
+  <g transform="translate(792 84)">
+    <circle cx="0" cy="0" r="5" fill="#69f0ae"/>
+    <text x="16" y="6" fill="#c8f8ff" font-family="JetBrains Mono, Consolas, monospace" font-size="18" font-weight="700">identity.ready</text>
+  </g>
+</svg>

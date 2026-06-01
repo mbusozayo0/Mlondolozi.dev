@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="180" viewBox="0 0 720 180" role="img" aria-labelledby="title desc">
+  <title id="title">Mlondolozi.dev logo</title>
+  <desc id="desc">Primary Mlondolozi.dev logo with MZ monogram and wordmark.</desc>
+  <defs>
+    <linearGradient id="mark" x1="22" y1="20" x2="134" y2="150" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#e8fbff"/>
+      <stop offset="0.48" stop-color="#53e7ff"/>
+      <stop offset="1" stop-color="#ffb86c"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(18 18)">
+    <ellipse cx="72" cy="72" rx="91" ry="37" fill="none" stroke="#1f9ab2" stroke-width="1.8" opacity="0.54" transform="rotate(-28 72 72)"/>
+    <ellipse cx="72" cy="72" rx="86" ry="55" fill="none" stroke="#245d84" stroke-width="1.8" opacity="0.48" transform="rotate(28 72 72)"/>
+    <rect x="14" y="14" width="116" height="116" rx="20" fill="url(#mark)"/>
+    <text x="72" y="89" text-anchor="middle" fill="#061018" font-family="Space Grotesk, Inter, Arial, sans-serif" font-size="44" font-weight="800" letter-spacing="0">MZ</text>
+  </g>
+  <g transform="translate(178 48)">
+    <text x="0" y="18" fill="#ff9f43" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="800" letter-spacing="1.8">CONSULTANT + SOFTWARE DEVELOPER</text>
+    <text x="0" y="74" fill="#f4f8fb" font-family="Space Grotesk, Inter, Arial, sans-serif" font-size="52" font-weight="700" letter-spacing="0">Mlondolozi Zondi</text>
+    <text x="2" y="106" fill="#9fb4c8" font-family="JetBrains Mono, Consolas, monospace" font-size="16" font-weight="500">Mlondolozi.dev</text>
+  </g>
+</svg>

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Mlondolozi Zondi square logo</title>
+  <desc id="desc">A rounded square MZ monogram with orbit lines in teal, blue, and warm orange.</desc>
+  <defs>
+    <linearGradient id="shell" x1="64" y1="48" x2="448" y2="464" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#102038"/>
+      <stop offset="0.48" stop-color="#080d16"/>
+      <stop offset="1" stop-color="#05070b"/>
+    </linearGradient>
+    <linearGradient id="mark" x1="164" y1="150" x2="348" y2="362" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#e8fbff"/>
+      <stop offset="0.48" stop-color="#53e7ff"/>
+      <stop offset="1" stop-color="#ffb86c"/>
+    </linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="10" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.13 0 0 0 0 0.83 0 0 0 0 0.93 0 0 0 0.45 0"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="512" height="512" rx="56" fill="url(#shell)"/>
+  <rect x="12" y="12" width="488" height="488" rx="44" fill="none" stroke="#21475f" stroke-width="2"/>
+  <ellipse cx="256" cy="256" rx="160" ry="82" fill="none" stroke="#1f9ab2" stroke-width="2.2" opacity="0.62" transform="rotate(-28 256 256)"/>
+  <ellipse cx="256" cy="256" rx="168" ry="110" fill="none" stroke="#245d84" stroke-width="2.2" opacity="0.54" transform="rotate(28 256 256)"/>
+  <circle cx="256" cy="256" r="128" fill="none" stroke="#24798e" stroke-width="2.2" opacity="0.5"/>
+  <rect x="158" y="158" width="196" height="196" rx="28" fill="url(#mark)" filter="url(#glow)"/>
+  <text x="256" y="286" text-anchor="middle" fill="#061018" font-family="Space Grotesk, Inter, Arial, sans-serif" font-size="70" font-weight="800" letter-spacing="0">MZ</text>
+</svg>

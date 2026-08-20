@@ -1,5 +1,10 @@
 node_modules/
 dist/
+work/
+outputs/
+docs/
+.vite/
+*.tsbuildinfo
 .DS_Store
 *.log
 .env

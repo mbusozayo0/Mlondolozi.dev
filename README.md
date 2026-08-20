@@ -1,3 +1,18 @@
+# Mlondolozi.dev
+
+A professional portfolio for Mlondolozi Zondi, presenting enterprise systems,
+validation, integration, software, and cloud engineering work. The main route is
+a fast recruiter-friendly portfolio; `/experience` is an optional immersive
+Three.js experience loaded as a separate bundle.
+
+## Stack
+
+- React 19 and TypeScript
+- Vite
+- Framer Motion
+- Three.js and React Three Fiber for the immersive route
+- EmailJS for the enquiry form
+
 ## Local Development
 
 ```powershell
@@ -12,6 +27,27 @@ npm run build
 ```
 
 The production output is generated in `dist/`.
+
+## MLO.OS Interactive Experience
+
+The existing portfolio remains at `/`. The immersive Three.js experience is isolated at:
+
+```txt
+/experience
+```
+
+The app also detects an `experience.*` hostname, so the same build can be deployed to
+`experience.mlondolozi.dev` without replacing the main portfolio.
+
+## Vercel Deployment for experience.mlondolozi.dev
+
+1. Import this repository into a separate Vercel project.
+2. Use the Vite preset, `npm run build`, and `dist` output directory.
+3. Add `experience.mlondolozi.dev` as the project's custom domain.
+4. Point the subdomain DNS record to Vercel as instructed in the project dashboard.
+
+The hostname detector will render MLO.OS at the subdomain root. `vercel.json` also keeps direct
+`/experience` links working when the build is served from the main domain.
 
 ## Cloudflare Pages Deployment
 
@@ -133,6 +169,6 @@ Message:
 Regards,
 Mlondolozi Zondi
 
-Consultant + software developer
+Enterprise systems + integration engineer
 hello@mlondolozi.dev
 ```

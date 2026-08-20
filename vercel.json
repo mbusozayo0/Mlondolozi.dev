@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/experience/:path*",
+      "destination": "/index.html"
+    }
+  ]
+}
